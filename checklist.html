@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boys Trip — Booking Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --cream: #F5F0E8;
+    --ink: #1A1814;
+    --ink-mid: #3D3830;
+    --ink-light: #7A6F60;
+    --vietnam: #B5392A;
+    --travel-bg: #2A2520;
+    --border: rgba(201,168,76,0.25);
+    --done-bg: #F0F7F2;
+    --done-border: rgba(15,122,90,0.2);
+    --done-text: #0F7A5A;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  .header {
+    text-align: center;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 0.75rem;
+  }
+
+  .header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 60px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+
+  .section-urgency {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .urgent { background: #FBEAEA; color: #991B1B; border: 1px solid rgba(153,27,27,0.2); }
+  .soon { background: rgba(201,168,76,0.15); color: #7A5A1A; border: 1px solid rgba(201,168,76,0.3); }
+  .anytime { background: rgba(0,0,0,0.05); color: var(--ink-light); border: 1px solid rgba(0,0,0,0.1); }
+  .done { background: var(--done-bg); color: var(--done-text); border: 1px solid var(--done-border); }
+
+  /* BOOKING ITEM */
+  .item {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 12px;
+    align-items: start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .item:first-of-type {
+    border-top: 1px solid var(--border);
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--gold);
+    border-radius: 3px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    background: white;
+  }
+
+  .checkbox.checked {
+    background: var(--done-text);
+    border-color: var(--done-text);
+  }
+
+  .checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .item-body {}
+
+  .item-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .item-detail {
+    font-size: 12.5px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  .item-date {
+    font-size: 11px;
+    color: var(--ink-light);
+    white-space: nowrap;
+    margin-top: 3px;
+    letter-spacing: 0.03em;
+  }
+
+  .item.is-done .item-title {
+    text-decoration: line-through;
+    color: var(--ink-light);
+  }
+
+  .where {
+    display: inline-block;
+    font-size: 11px;
+    background: rgba(201,168,76,0.1);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 1px 7px;
+    border-radius: 2px;
+    margin-top: 4px;
+    letter-spacing: 0.03em;
+  }
+
+  .progress-bar-wrap {
+    margin-bottom: 2rem;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  @media (max-width: 500px) {
+    .page { padding: 2rem 1rem 4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <p class="header-eyebrow">Thailand & Vietnam · Dec 26 – Jan 17</p>
+    <h1 class="header-title">Booking Checklist</h1>
+    <p class="header-sub">Everything that needs to be locked in before you go</p>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span id="progress-label">1 of 14 booked</span>
+      <span id="progress-pct">7%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 7%"></div>
+    </div>
+  </div>
+
+  <!-- DONE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Already Booked</span>
+      <span class="section-urgency done">✓ Done</span>
+    </div>
+
+    <div class="item is-done" data-checked="true">
+      <div class="checkbox checked" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">AKL → Phuket (inbound)</div>
+        <div class="item-detail">NZ280 AKL→SIN 5:20pm · NZ3490 SIN→HKT · Arrives 7:50am 27 Dec</div>
+      </div>
+      <div class="item-date">26 Dec</div>
+    </div>
+
+    <div class="item is-done" data-checked="true">
+      <div class="checkbox checked" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">HCMC → Auckland (outbound)</div>
+        <div class="item-detail">JQ64 SGN→MEL 10:40pm · JQ213 MEL→AKL · Arrives 12:30am 17 Jan</div>
+      </div>
+      <div class="item-date">15 Jan</div>
+    </div>
+  </div>
+
+  <!-- URGENT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Book Now</span>
+      <span class="section-urgency urgent">Urgent</span>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Koh Phangan NYE Accommodation</div>
+        <div class="item-detail">3 nights minimum · Haad Rin beach area · books out months in advance for NYE. Try Slumber Party Hostel, Coral Bungalows, or Hideout Hostel.</div>
+        <span class="where">Hostelworld · Booking.com</span>
+      </div>
+      <div class="item-date">29–31 Dec</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Ha Giang Loop — Easy Riders</div>
+        <div class="item-detail">3-day guided motorbike tour · book via QT Motorbikes or Mad Monkey · limited spots and fills fast. Need to arrange permit + guide.</div>
+        <span class="where">qtmotorbikes.com · madmonkeyhostels.com</span>
+      </div>
+      <div class="item-date">9–11 Jan</div>
+    </div>
+  </div>
+
+  <!-- SOON -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Book Soon</span>
+      <span class="section-urgency soon">Before you go</span>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Domestic flight — Krabi → Bangkok</div>
+        <div class="item-detail">KBV → BKK · AirAsia or Nok Air · ~1.5 hrs · book early for cheap fares</div>
+        <span class="where">airasia.com · nokair.com</span>
+      </div>
+      <div class="item-date">4 Jan (eve)</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Flight — Bangkok → Hanoi</div>
+        <div class="item-detail">BKK → HAN · AirAsia or VietJet · ~2.5 hrs</div>
+        <span class="where">airasia.com · vietjetair.com</span>
+      </div>
+      <div class="item-date">7 Jan</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Flight — Hanoi → Ho Chi Minh City</div>
+        <div class="item-detail">HAN → SGN · VietJet or Vietnam Airlines · ~2 hrs · fly midday on 12 Jan</div>
+        <span class="where">vietjetair.com · vietnamairlines.com</span>
+      </div>
+      <div class="item-date">12 Jan</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Ferry — Phuket → Koh Phangan</div>
+        <div class="item-detail">Via Surat Thani or direct speedboat · ~3.5–4 hrs · book in advance over peak season</div>
+        <span class="where">12go.asia · seatranferry.com</span>
+      </div>
+      <div class="item-date">28 Dec</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Ferry — Koh Phangan → Krabi</div>
+        <div class="item-detail">Afternoon ferry · ~2–3 hrs · Jan 1 (NYE recovery morning first)</div>
+        <span class="where">12go.asia · lomprayah.com</span>
+      </div>
+      <div class="item-date">1 Jan</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Ferry — Krabi → Phi Phi → Krabi</div>
+        <div class="item-detail">Return ferry to Phi Phi Don · ~1.5–2 hrs each way</div>
+        <span class="where">12go.asia · tigerlineferry.com</span>
+      </div>
+      <div class="item-date">3–4 Jan</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Sleeper bus — Hanoi → Ha Giang</div>
+        <div class="item-detail">Overnight bus departing ~9pm · ~7–8 hrs · book through Ha Giang operator or 12go</div>
+        <span class="where">12go.asia · your Ha Giang operator</span>
+      </div>
+      <div class="item-date">8 Jan (night)</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Sleeper bus — Ha Giang → Hanoi</div>
+        <div class="item-detail">Overnight bus back · ~7–8 hrs · usually arranged through Ha Giang operator</div>
+        <span class="where">12go.asia · your Ha Giang operator</span>
+      </div>
+      <div class="item-date">11 Jan (night)</div>
+    </div>
+  </div>
+
+  <!-- ANYTIME -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Sort Before You Leave</span>
+      <span class="section-urgency anytime">No rush</span>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Travel Insurance</div>
+        <div class="item-detail">Make sure it covers motorbike riding (essential for Ha Giang) and adventure activities. Southern Cross or World Nomads are solid options from NZ.</div>
+        <span class="where">worldnomads.com · scti.co.nz</span>
+      </div>
+      <div class="item-date">ASAP</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Vietnam e-Visa</div>
+        <div class="item-detail">NZ passport holders need a visa for Vietnam. Apply online via the official portal — takes 3 business days, costs ~$30 USD. Do not use third-party sites.</div>
+        <span class="where">evisa.xuatnhapcanh.gov.vn</span>
+      </div>
+      <div class="item-date">Before departure</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Phuket accommodation — 27 Dec</div>
+        <div class="item-detail">1 night in Patong Beach area. Plenty of availability, no rush — but sort it before you go.</div>
+        <span class="where">Hostelworld · Booking.com</span>
+      </div>
+      <div class="item-date">27 Dec</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Bangkok accommodation — 2 nights</div>
+        <div class="item-detail">Khao San Road area for the full backpacker experience. Lub.d or NapPark are solid options.</div>
+        <span class="where">Hostelworld · Booking.com</span>
+      </div>
+      <div class="item-date">5–6 Jan</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Hanoi accommodation — 2 nights</div>
+        <div class="item-detail">Old Quarter. Leave big bags here while on Ha Giang loop. Vietnam Cheers Hostel or Buffalo Hostel are popular options.</div>
+        <span class="where">Hostelworld · Booking.com</span>
+      </div>
+      <div class="item-date">7–8 Jan</div>
+    </div>
+
+    <div class="item" data-checked="false">
+      <div class="checkbox" onclick="toggle(this)"></div>
+      <div class="item-body">
+        <div class="item-title">Ho Chi Minh City accommodation — 2 nights</div>
+        <div class="item-detail">Backpacker district near Bui Vien. Heaps of options, easy to sort closer to the time.</div>
+        <span class="where">Hostelworld · Booking.com</span>
+      </div>
+      <div class="item-date">12–14 Jan</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function toggle(checkbox) {
+    const item = checkbox.closest('.item');
+    const isChecked = checkbox.classList.contains('checked');
+
+    if (isChecked) {
+      checkbox.classList.remove('checked');
+      item.classList.remove('is-done');
+      item.dataset.checked = 'false';
+    } else {
+      checkbox.classList.add('checked');
+      item.classList.add('is-done');
+      item.dataset.checked = 'true';
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.item');
+    const checked = document.querySelectorAll('.item[data-checked="true"]');
+    const total = all.length;
+    const done = checked.length;
+    const pct = Math.round((done / total) * 100);
+
+    document.getElementById('progress-label').textContent = `${done} of ${total} booked`;
+    document.getElementById('progress-pct').textContent = `${pct}%`;
+    document.getElementById('progress-fill').style.width = pct + '%';
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
