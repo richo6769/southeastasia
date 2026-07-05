@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boys Trip — Transport Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --cream: #F5F0E8;
+    --ink: #1A1814;
+    --ink-mid: #3D3830;
+    --ink-light: #7A6F60;
+    --thailand: #C9A84C;
+    --vietnam: #B5392A;
+    --border: rgba(201,168,76,0.25);
+    --rec-bg: #FFFDF5;
+    --rec-border: #C9A84C;
+    --alt-bg: #FAFAF8;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  .header {
+    text-align: center;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 0.75rem;
+  }
+
+  .header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 60px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-flag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    padding: 3px 12px;
+    border-radius: 3px;
+  }
+
+  .flag-thailand { background: var(--thailand); color: #fff; }
+  .flag-vietnam { background: var(--vietnam); color: #fff; }
+  .flag-done { background: #0F7A5A; color: #fff; }
+  .flag-note { background: var(--ink); color: #fff; }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+  }
+
+  /* LEG */
+  .leg {
+    margin-bottom: 1.5rem;
+  }
+
+  .leg-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 0.6rem;
+  }
+
+  .leg-route {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .leg-date {
+    font-size: 11px;
+    color: var(--ink-light);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* OPTION CARDS */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .option {
+    border-radius: 4px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    background: var(--alt-bg);
+    position: relative;
+  }
+
+  .option.recommended {
+    background: var(--rec-bg);
+    border: 1.5px solid var(--rec-border);
+  }
+
+  .option-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .option-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .option.recommended .option-name {
+    font-weight: 600;
+  }
+
+  .rec-badge {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .option-price {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .option.recommended .option-price {
+    color: #7A5A1A;
+    font-weight: 600;
+  }
+
+  .option-detail {
+    font-size: 12.5px;
+    color: var(--ink-light);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+
+  .where-tag {
+    display: inline-block;
+    font-size: 10px;
+    background: rgba(201,168,76,0.1);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 1px 7px;
+    border-radius: 2px;
+    margin-top: 5px;
+    letter-spacing: 0.03em;
+  }
+
+  /* DONE ITEM */
+  .done-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .done-item:last-child { border-bottom: none; }
+
+  .done-check {
+    width: 18px;
+    height: 18px;
+    background: #0F7A5A;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .done-check::after {
+    content: '✓';
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .done-body {}
+
+  .done-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-light);
+    text-decoration: line-through;
+  }
+
+  .done-detail {
+    font-size: 12.5px;
+    color: var(--ink-light);
+  }
+
+  /* NOTE BOX */
+  .note-box {
+    background: #2A2520;
+    color: rgba(245,240,232,0.7);
+    border-radius: 4px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+
+  .note-box strong {
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+
+  .total-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .total-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+
+  .total-sub {
+    font-size: 11px;
+    color: var(--ink-light);
+    text-align: right;
+    margin-top: -4px;
+  }
+
+  @media (max-width: 500px) {
+    .page { padding: 2rem 1rem 4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <p class="header-eyebrow">Thailand & Vietnam · Dec 26 – Jan 17</p>
+    <h1 class="header-title">Transport Options</h1>
+    <p class="header-sub">All prices per person · NZD · Recommended option in gold</p>
+  </div>
+
+  <!-- ALREADY BOOKED -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag flag-done">✓ Booked</span>
+      <span class="section-title">International Flights</span>
+    </div>
+
+    <div class="done-item">
+      <div class="done-check"></div>
+      <div class="done-body">
+        <div class="done-title">AKL → Phuket (inbound)</div>
+        <div class="done-detail">NZ280 AKL→SIN 5:20pm · 8hr Singapore transit · NZ3490 SIN→HKT · Arrives 7:50am 27 Dec</div>
+      </div>
+    </div>
+
+    <div class="done-item">
+      <div class="done-check"></div>
+      <div class="done-body">
+        <div class="done-title">HCMC → Auckland (outbound)</div>
+        <div class="done-detail">JQ64 SGN→MEL 10:40pm 15 Jan · JQ213 MEL→AKL · Arrives AKL 12:30am 17 Jan</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THAILAND -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag flag-thailand">Thailand</span>
+      <span class="section-title">Transport Legs</span>
+    </div>
+
+    <!-- Phuket → Koh Phangan -->
+    <div class="leg">
+      <div class="leg-header">
+        <span class="leg-route">Phuket → Koh Phangan</span>
+        <span class="leg-date">28 Dec</span>
+      </div>
+      <div class="options">
+        <div class="option">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Bus + Ferry (Budget)</span></div>
+            <span class="option-price">NZ$46pp</span>
+          </div>
+          <div class="option-detail">Departs 8:00am Phuket Bus Terminal → arrives 4:30pm Thong Sala · 8.5hrs · Rated 4.3</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+        <div class="option recommended">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Lomprayah Express Ferry</span> <span class="rec-badge">★ Recommended</span></div>
+            <span class="option-price">NZ$74pp</span>
+          </div>
+          <div class="option-detail"><strong>Departs 9:30am Phuket Lomprayah → arrives 4:30pm Thong Sala · 7hrs · Rated 4.4 · Free cancellation.</strong> Later departure = more time in Phuket the morning of the 28th.</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+        <div class="option">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Express from Phuket Airport (Fastest)</span></div>
+            <span class="option-price">NZ$84pp</span>
+          </div>
+          <div class="option-detail">Departs 10:00am Phuket Airport → arrives 4:30pm · 6.5hrs · Rated 4.4. Only useful if arriving day of.</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Koh Phangan → Krabi -->
+    <div class="leg">
+      <div class="leg-header">
+        <span class="leg-route">Koh Phangan → Krabi</span>
+        <span class="leg-date">1 Jan</span>
+      </div>
+      <div class="options">
+        <div class="option recommended">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Ferry + Van to Ao Nang</span> <span class="rec-badge">★ Recommended</span></div>
+            <span class="option-price">NZ$42pp</span>
+          </div>
+          <div class="option-detail"><strong>Departs 11:30am Thong Sala → arrives 4:30pm Ao Nang · 5hrs · Rated 4.7 · Free cancellation.</strong> Perfect NYE recovery morning. Drops at Ao Nang, no taxi needed.</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+        <div class="option">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Ferry + Bus (Cheapest)</span></div>
+            <span class="option-price">NZ$24pp</span>
+          </div>
+          <div class="option-detail">Departs 11:00am → arrives 5:45pm Krabi Bus Terminal · 6h 45min · Rated 4.7. Saves $18pp but arrives at bus terminal, not Ao Nang.</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Krabi → Phi Phi -->
+    <div class="leg">
+      <div class="leg-header">
+        <span class="leg-route">Krabi → Phi Phi Islands</span>
+        <span class="leg-date">3 Jan</span>
+      </div>
+      <div class="options">
+        <div class="option recommended">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Bundhaya Speedboat</span> <span class="rec-badge">★ Recommended</span></div>
+            <span class="option-price">NZ$47pp</span>
+          </div>
+          <div class="option-detail"><strong>Departs 10:10am Ao Nang → arrives 11:00am Phi Phi · 50min · Rated 4.5 · Free cancellation.</strong> Arrives 11am, full day on Phi Phi.</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+        <div class="option">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Standard Ferry</span></div>
+            <span class="option-price">NZ$37pp</span>
+          </div>
+          <div class="option-detail">Departs 9:30am Ao Nang → arrives 11:30am Phi Phi · 2hrs · Rated 4.6. Saves $10pp but slower and less fun.</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phi Phi → Krabi -->
+    <div class="leg">
+      <div class="leg-header">
+        <span class="leg-route">Phi Phi Islands → Krabi</span>
+        <span class="leg-date">4 Jan</span>
+      </div>
+      <div class="options">
+        <div class="option recommended">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Ferry + Van to Ao Nang</span> <span class="rec-badge">★ Recommended</span></div>
+            <span class="option-price">NZ$32pp</span>
+          </div>
+          <div class="option-detail"><strong>Departs 9:30am Phi Phi → arrives 10:30am Ao Nang · 1hr · Rated 4.6.</strong> Early departure, back in Krabi by 10:30am — full afternoon before evening flight to Bangkok.</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+        <div class="option">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Bundhaya Speedboat</span></div>
+            <span class="option-price">NZ$47pp</span>
+          </div>
+          <div class="option-detail">Departs 10:30am → arrives 11:30am · 1hr · Rated 4.5. Same journey, later departure, costs more. No reason to pick this over Option 1.</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Krabi → Bangkok -->
+    <div class="leg">
+      <div class="leg-header">
+        <span class="leg-route">Krabi → Bangkok</span>
+        <span class="leg-date">4 Jan (evening)</span>
+      </div>
+      <div class="options">
+        <div class="option recommended">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Flight — AirAsia / VietJet</span> <span class="rec-badge">★ Recommended</span></div>
+            <span class="option-price">NZ$190–265pp</span>
+          </div>
+          <div class="option-detail"><strong>~1.5hrs direct · Multiple evening departures · Arrive Bangkok fresh, check in, first night out.</strong> More expensive but you arrive ready to go rather than at 5am wrecked.</div>
+          <span class="where-tag">airasia.com · vietjetair.com</span>
+        </div>
+        <div class="option">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Overnight Bus/Van</span></div>
+            <span class="option-price">NZ$35–38pp</span>
+          </div>
+          <div class="option-detail">Departs ~3pm Krabi → arrives ~5–6am Bangkok Khao San Road · 14–15hrs. Saves ~$150–200pp per person across the group but arrives 5am with nowhere to check in. Two overnight buses already in Vietnam.</div>
+          <span class="where-tag">12go.asia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIETNAM -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag flag-vietnam">Vietnam</span>
+      <span class="section-title">Transport Legs</span>
+    </div>
+
+    <!-- Bangkok → Hanoi -->
+    <div class="leg">
+      <div class="leg-header">
+        <span class="leg-route">Bangkok → Hanoi</span>
+        <span class="leg-date">7 Jan</span>
+      </div>
+      <div class="options">
+        <div class="option recommended">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">VietJet — 9:25am departure</span> <span class="rec-badge">★ Recommended</span></div>
+            <span class="option-price">NZ$145pp</span>
+          </div>
+          <div class="option-detail"><strong>Departs 9:25am BKK → arrives 11:15am HAN · 1h 50min direct.</strong> Early start but arrives Hanoi by midday — full afternoon in the Old Quarter and Beer Street that night before overnight bus.</div>
+          <span class="where-tag">skyscanner.com · vietjetair.com</span>
+        </div>
+        <div class="option">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">VietJet — 3:05pm departure</span></div>
+            <span class="option-price">NZ$156pp</span>
+          </div>
+          <div class="option-detail">Departs 3:05pm BKK → arrives 5:00pm HAN · 1h 55min direct. Later and more expensive — less time in Hanoi before overnight bus.</div>
+          <span class="where-tag">skyscanner.com · vietjetair.com</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ha Giang Sleeper Buses -->
+    <div class="leg">
+      <div class="leg-header">
+        <span class="leg-route">Hanoi ↔ Ha Giang (sleeper buses)</span>
+        <span class="leg-date">8 Jan night + 11 Jan night</span>
+      </div>
+      <div class="options">
+        <div class="option recommended">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">Included in Mad Monkey Ha Giang Loop package</span> <span class="rec-badge">★ Included</span></div>
+            <span class="option-price">Included</span>
+          </div>
+          <div class="option-detail"><strong>Both sleeper buses (Hanoi → Ha Giang night of 8 Jan, Ha Giang → Hanoi night of 11 Jan) included in the Mad Monkey tour price.</strong> Book opens ~October 2026. $212 USD per person for the full loop.</div>
+          <span class="where-tag">madmonkeyhostels.com</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hanoi → HCMC -->
+    <div class="leg">
+      <div class="leg-header">
+        <span class="leg-route">Hanoi → Ho Chi Minh City</span>
+        <span class="leg-date">12 Jan</span>
+      </div>
+      <div class="options">
+        <div class="option recommended">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">VietJet — 12:55pm departure</span> <span class="rec-badge">★ Recommended</span></div>
+            <span class="option-price">NZ$89pp</span>
+          </div>
+          <div class="option-detail"><strong>Departs 12:55pm HAN → arrives 3:05pm SGN · 2h 10min direct.</strong> Gives time to collect bags from Hanoi hostel storage after overnight bus from Ha Giang before heading to airport. All departures same price.</div>
+          <span class="where-tag">skyscanner.com · vietjetair.com</span>
+        </div>
+        <div class="option">
+          <div class="option-top">
+            <div class="option-label"><span class="option-name">VietJet — 10:40am departure</span></div>
+            <span class="option-price">NZ$89pp</span>
+          </div>
+          <div class="option-detail">Departs 10:40am → arrives 12:50pm. Same price, earlier arrival in HCMC but tighter turnaround after overnight Ha Giang bus.</div>
+          <span class="where-tag">skyscanner.com · vietjetair.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COST SUMMARY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag flag-note">NZD</span>
+      <span class="section-title">Cost Summary — Recommended Options</span>
+    </div>
+
+    <div class="note-box">
+      <strong>Per person total (recommended options, excl. international flights already booked):</strong><br><br>
+      Phuket → Koh Phangan · NZ$74<br>
+      Koh Phangan → Krabi · NZ$42<br>
+      Krabi → Phi Phi · NZ$47<br>
+      Phi Phi → Krabi · NZ$32<br>
+      Krabi → Bangkok (flight) · NZ$~220<br>
+      Bangkok → Hanoi · NZ$145<br>
+      Ha Giang Loop (inc. buses) · ~NZ$330 (USD$212)<br>
+      Hanoi → HCMC · NZ$89<br><br>
+      <strong>Estimated total per person: ~NZ$980–1,010</strong><br>
+      <span style="font-size:11px; color: rgba(245,240,232,0.5);">Excludes accommodation, food, activities, and international flights already booked.</span>
+    </div>
+
+    <div class="note-box" style="margin-top: 10px;">
+      <strong>Budget option (bus Krabi → Bangkok instead of flying):</strong> saves ~NZ$180pp · total ~NZ$800–830pp
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
