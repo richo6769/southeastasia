@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thailand & Vietnam — Dec 26 → Jan 15</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --cream: #F5F0E8;
+    --ink: #1A1814;
+    --ink-mid: #3D3830;
+    --ink-light: #7A6F60;
+    --thailand: #C9A84C;
+    --vietnam: #B5392A;
+    --travel-bg: #2A2520;
+    --border: rgba(201,168,76,0.25);
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  .header {
+    text-align: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 1rem;
+  }
+
+  .header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 88px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .header-title span { color: var(--gold); }
+
+  .route-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .route-city {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+  }
+
+  .route-arrow {
+    font-size: 11px;
+    color: var(--gold);
+  }
+
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-item { text-align: center; }
+
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .meta-value {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .country-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.5rem 0 1.5rem;
+  }
+
+  .country-flag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.05em;
+    padding: 6px 16px;
+    border-radius: 3px;
+  }
+
+  .country-flag.thailand { background: var(--thailand); color: #fff; }
+  .country-flag.vietnam { background: var(--vietnam); color: #fff; }
+
+  .country-nights {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    font-weight: 400;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .day-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .day-row:first-of-type { border-top: 1px solid var(--border); }
+
+  .day-date {
+    padding: 1.25rem 1rem 1.25rem 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .day-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--ink);
+    display: block;
+  }
+
+  .day-month-dow {
+    font-size: 11px;
+    color: var(--ink-light);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .day-range-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .day-range-sub {
+    font-size: 11px;
+    color: var(--ink-light);
+    margin-top: 2px;
+    display: block;
+  }
+
+  .day-content {
+    padding: 1.25rem 0 1.25rem 1.25rem;
+  }
+
+  .day-location {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .day-desc {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  .travel-row {
+    background: var(--travel-bg);
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .travel-row .day-date { border-right: 1px solid rgba(201,168,76,0.15); }
+  .travel-row .day-number,
+  .travel-row .day-range-label { color: var(--gold-light); }
+  .travel-row .day-month-dow,
+  .travel-row .day-range-sub { color: rgba(201,168,76,0.5); }
+  .travel-row .day-content { padding: 1.25rem 0 1.25rem 1.25rem; }
+  .travel-row .day-location { color: var(--gold-light); }
+  .travel-row .day-desc { color: rgba(245,240,232,0.6); }
+
+  .travel-detail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+
+  .travel-leg {
+    font-size: 12px;
+    background: rgba(201,168,76,0.12);
+    color: var(--gold-light);
+    padding: 3px 10px;
+    border-radius: 2px;
+    border: 1px solid rgba(201,168,76,0.2);
+    letter-spacing: 0.03em;
+  }
+
+  .travel-time {
+    font-size: 11px;
+    color: rgba(201,168,76,0.5);
+  }
+
+  .inline-travel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  .inline-leg {
+    font-size: 12px;
+    background: rgba(0,0,0,0.05);
+    color: var(--ink-light);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  .badge {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .b-party { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .b-beach { background: rgba(29,158,117,0.1); color: #0F7A5A; border: 1px solid rgba(29,158,117,0.25); }
+  .b-sights { background: rgba(60,90,160,0.08); color: #2A4A9A; border: 1px solid rgba(60,90,160,0.2); }
+  .b-adventure { background: rgba(181,57,42,0.08); color: var(--vietnam); border: 1px solid rgba(181,57,42,0.2); }
+  .b-nye { background: rgba(201,168,76,0.2); color: #8A6A1A; border: 1px solid var(--gold); font-weight: 500; }
+  .b-market { background: rgba(130,80,180,0.08); color: #6A3A9A; border: 1px solid rgba(130,80,180,0.2); }
+
+  .highlight-row { background: #fffdf5; border-left: 3px solid var(--gold); }
+  .highlight-row .day-date { border-right: 1px solid var(--border); }
+
+  .footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .footer-note h4 {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .footer-note p {
+    font-size: 12.5px;
+    color: var(--ink-light);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 500px) {
+    .page { padding: 2rem 1rem 4rem; }
+    .header-title { font-size: 44px; }
+    .day-row, .travel-row { grid-template-columns: 80px 1fr; }
+  }
+</style>
+</head>
+<body><nav style="background:#1A1814; padding:0; position:sticky; top:0; z-index:100; border-bottom:1px solid rgba(201,168,76,0.2);">
+  <div style="max-width:780px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 2rem;">
+    <span style="font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:0.05em; color:#C9A84C; padding: 12px 0;">SEA Trip 2026</span>
+    <div style="display:flex;">
+      <a href="index.html" style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:rgba(245,240,232,0.7); text-decoration:none; padding:16px 14px;">Itinerary</a>
+      <a href="transport.html" style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:rgba(245,240,232,0.7); text-decoration:none; padding:16px 14px;">Transport</a>
+      <a href="checklist.html" style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:rgba(245,240,232,0.7); text-decoration:none; padding:16px 14px;">Checklist</a>
+    </div>
+  </div>
+</nav>
+<div class="page">
+
+  <div class="header">
+    <p class="header-eyebrow">The Boys Trip — Dec 26 2026 → Jan 17 2027</p>
+    <h1 class="header-title">Thailand<br><span>&</span><br>Vietnam</h1>
+    <div class="route-strip">
+      <span class="route-city">Auckland</span>
+      <span class="route-arrow">→</span>
+      <span class="route-city">Phuket</span>
+      <span class="route-arrow">→</span>
+      <span class="route-city">Koh Phangan</span>
+      <span class="route-arrow">→</span>
+      <span class="route-city">Krabi</span>
+      <span class="route-arrow">→</span>
+      <span class="route-city">Phi Phi</span>
+      <span class="route-arrow">→</span>
+      <span class="route-city">Bangkok</span>
+      <span class="route-arrow">→</span>
+      <span class="route-city">Hanoi</span>
+      <span class="route-arrow">→</span>
+      <span class="route-city">Ha Giang</span>
+      <span class="route-arrow">→</span>
+      <span class="route-city">Ho Chi Minh</span>
+      <span class="route-arrow">→</span>
+      <span class="route-city">Auckland</span>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Depart AKL</span>
+        <span class="meta-value">26 Dec · 5:20pm</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Arrive Phuket</span>
+        <span class="meta-value">27 Dec · 7:50am</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Return</span>
+        <span class="meta-value">15 Jan · HCMC → AKL</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Duration</span>
+        <span class="meta-value">19 nights</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Highlight</span>
+        <span class="meta-value">Full Moon NYE — Dec 31</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THAILAND -->
+  <div class="country-divider">
+    <div class="country-flag thailand">Thailand</div>
+    <span class="country-nights">13 nights</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- 26 Dec arrive Phuket -->
+  <div class="travel-row">
+    <div class="day-date"><span class="day-number">26</span><span class="day-month-dow">Dec · Fri</span></div>
+    <div class="day-content">
+      <div class="day-location">Auckland → Singapore → Phuket</div>
+      <div class="travel-detail">
+        <span class="travel-leg">AKL → SIN (Air New Zealand NZ280)</span>
+        <span class="travel-time">Departs 5:20pm · 10h 35min</span>
+      </div>
+      <div class="travel-detail">
+        <span class="travel-leg">8hr transit Singapore</span>
+        <span class="travel-time">overnight in airport</span>
+      </div>
+      <div class="travel-detail">
+        <span class="travel-leg">SIN → HKT (Singapore Airlines NZ3490)</span>
+        <span class="travel-time">Departs 6:55am Sun 27 Dec · 1h 55min</span>
+      </div>
+      <div class="day-desc" style="margin-top:8px;">Long haul. Arrive Phuket 7:50am Sunday 27 Dec. Total journey ~21 hrs. Get to Patong, check in, sleep.</div>
+    </div>
+  </div>
+
+  <!-- 27 Dec Phuket -->
+  <div class="day-row">
+    <div class="day-date"><span class="day-number">27</span><span class="day-month-dow">Dec · Sat</span></div>
+    <div class="day-content">
+      <div class="day-location">Phuket <span class="badge b-beach">beach</span> <span class="badge b-party">nightlife</span></div>
+      <div class="day-desc">Arrive 7:50am, check in, sleep it off. Afternoon at Patong Beach once you're human again. Bangla Road at night — one of the wildest strips in Southeast Asia. Tiger Discotheque or Illuzion for a proper club. First big night of the trip.</div>
+    </div>
+  </div>
+
+  <!-- 28 Dec Phuket → Phangan -->
+  <div class="travel-row">
+    <div class="day-date"><span class="day-number">28</span><span class="day-month-dow">Dec · Sun</span></div>
+    <div class="day-content">
+      <div class="day-location">Phuket → Koh Phangan</div>
+      <div class="travel-detail">
+        <span class="travel-leg">Ferry or speedboat Phuket → Koh Phangan</span>
+        <span class="travel-time">~3.5–4 hrs</span>
+      </div>
+      <div class="day-desc" style="margin-top:8px;">Half travel day — depart morning, arrive early afternoon. Check into Haad Rin hostel. Rest up, explore the beach strip, early night ahead of NYE.</div>
+    </div>
+  </div>
+
+  <!-- 29 Dec Phangan -->
+  <div class="day-row">
+    <div class="day-date"><span class="day-number">29</span><span class="day-month-dow">Dec · Mon</span></div>
+    <div class="day-content">
+      <div class="day-location">Koh Phangan <span class="badge b-beach">beach</span></div>
+      <div class="day-desc">Rent scooters, explore the island. Bottle Beach or Haad Yuan for the day. Easy night — bars on the strip but nothing too heavy, saving it for the 31st.</div>
+    </div>
+  </div>
+
+  <!-- 30 Dec pre-party -->
+  <div class="day-row">
+    <div class="day-date"><span class="day-number">30</span><span class="day-month-dow">Dec · Tue</span></div>
+    <div class="day-content">
+      <div class="day-location">Koh Phangan <span class="badge b-beach">beach</span> <span class="badge b-party">pre-party</span></div>
+      <div class="day-desc">Beach day, get neon paint sorted. Haad Rin strip at night — every bar is in full NYE mode, the whole place is buzzing. Warm up night.</div>
+    </div>
+  </div>
+
+  <!-- 31 Dec NYE -->
+  <div class="day-row highlight-row">
+    <div class="day-date"><span class="day-number">31</span><span class="day-month-dow">Dec · Wed</span></div>
+    <div class="day-content">
+      <div class="day-location">Full Moon Party — New Year's Eve <span class="badge b-nye">★ NYE</span></div>
+      <div class="day-desc">Neon paint up. 30,000 people on Haad Rin Beach. Runs 6pm–6am, midnight countdown on the sand. One of the great NYE experiences on earth. Sleep most of Jan 1.</div>
+    </div>
+  </div>
+
+  <!-- 1 Jan recovery + travel -->
+  <div class="travel-row">
+    <div class="day-date"><span class="day-number">1</span><span class="day-month-dow">Jan · Thu</span></div>
+    <div class="day-content">
+      <div class="day-location">Koh Phangan → Krabi</div>
+      <div class="travel-detail">
+        <span class="travel-leg">Ferry Phangan → Krabi</span>
+        <span class="travel-time">~2–3 hrs · depart afternoon</span>
+      </div>
+      <div class="day-desc" style="margin-top:8px;">Recovery morning, then ferry across to Krabi. Arrive Ao Nang early evening. Easy dinner, early night. This one will hurt.</div>
+    </div>
+  </div>
+
+  <!-- 2 Jan Krabi -->
+  <div class="day-row">
+    <div class="day-date"><span class="day-number">2</span><span class="day-month-dow">Jan · Fri</span></div>
+    <div class="day-content">
+      <div class="day-location">Krabi / Ao Nang <span class="badge b-beach">beach</span> <span class="badge b-party">nightlife</span></div>
+      <div class="day-desc">Full day — beach, kayaking, longtail along the coast. Ao Nang strip at night. Good hostel rooftop bar scene here. Last night before Phi Phi.</div>
+    </div>
+  </div>
+
+  <!-- 3–4 Jan Phi Phi -->
+  <div class="day-row">
+    <div class="day-date">
+      <div class="day-range-label">3–4</div>
+      <span class="day-range-sub">Jan · Sat–Sun</span>
+    </div>
+    <div class="day-content">
+      <div class="day-location">Phi Phi Islands <span class="badge b-beach">beach</span> <span class="badge b-party">nightlife</span></div>
+      <div class="inline-travel">
+        <span class="inline-leg">Ferry Krabi → Phi Phi · 1.5–2 hrs</span>
+      </div>
+      <div class="day-desc">Maya Bay (The Beach), snorkelling at Shark Point, Viking Cave. Overnight on Phi Phi Don — Slinkys Bar and beach clubs at night. Speedboat to Phuket on the 4th, then fly to Bangkok.</div>
+    </div>
+  </div>
+
+  <!-- 4 Jan - Phi Phi to Phuket to BKK -->
+  <div class="travel-row">
+    <div class="day-date"><span class="day-number" style="font-size:18px;">4 Jan</span><span class="day-month-dow">Jan · Sun</span></div>
+    <div class="day-content">
+      <div class="day-location">Phi Phi → Phuket → Bangkok</div>
+      <div class="travel-detail">
+        <span class="travel-leg">Speedboat Phi Phi → Phuket (Rassada Pier)</span>
+        <span class="travel-time">Departs 11:30am · arrives 12:30pm · 1hr · NZ$44pp</span>
+      </div>
+      <div class="travel-detail">
+        <span class="travel-leg">HKT → BKK (Thai Airways)</span>
+        <span class="travel-time">Departs 4:05pm · arrives 5:35pm · 1.5hrs · NZ$285pp</span>
+      </div>
+      <div class="day-desc" style="margin-top:8px;">Arrive Phuket 12:30pm, lunch near the pier, get to airport. Arrive Bangkok 5:35pm. Check into Khao San Road area — first night in Bangkok, not jet lagged this time.</div>
+    </div>
+  </div>
+
+  <!-- 5–6 Jan Bangkok -->
+  <div class="day-row">
+    <div class="day-date">
+      <div class="day-range-label">4–5</div>
+      <span class="day-range-sub">Jan · Sun–Mon</span>
+    </div>
+    <div class="day-content">
+      <div class="day-location">Bangkok <span class="badge b-sights">sights</span> <span class="badge b-party">nightlife</span></div>
+      <div class="day-desc">Grand Palace, Wat Pho, Wat Arun. Rooftop bar one night (Octave or Sky Bar). Khao San Road the other — or RCA/Thonglor for proper clubs. Two nights, flying out morning of the 6th.</div>
+    </div>
+  </div>
+
+  <!-- 6 Jan BKK → Hanoi -->
+  <div class="travel-row">
+    <div class="day-date"><span class="day-number">6</span><span class="day-month-dow">Jan · Tue</span></div>
+    <div class="day-content">
+      <div class="day-location">Bangkok → Hanoi</div>
+      <div class="travel-detail">
+        <span class="travel-leg">BKK → HAN (VietJet)</span>
+        <span class="travel-time">~1h 50min direct · fly morning · NZ$145pp</span>
+      </div>
+      <div class="day-desc" style="margin-top:8px;">Short hop, arrive Hanoi late morning. Check into Old Quarter hostel, drop bags. Full afternoon exploring laneways, egg coffee, first banh mi. Ta Hien (Beer Street) at night.</div>
+    </div>
+  </div>
+
+  <!-- VIETNAM -->
+  <div class="country-divider" style="margin-top: 2.5rem;">
+    <div class="country-flag vietnam">Vietnam</div>
+    <span class="country-nights">8 nights</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- 6 Jan Hanoi arrival already covered above, 7 Jan Hanoi day 2 + overnight bus -->
+  <div class="day-row">
+    <div class="day-date"><span class="day-number">7</span><span class="day-month-dow">Jan · Wed</span></div>
+    <div class="day-content">
+      <div class="day-location">Hanoi <span class="badge b-sights">sights</span> <span class="badge b-party">nightlife</span></div>
+      <div class="day-desc">Hoan Kiem Lake, Old Quarter, Ho Chi Minh Mausoleum. Leave your big bags at the hostel — storage while you're on the loop. Another round on Beer Street. Board overnight sleeper bus to Ha Giang at 9pm.</div>
+    </div>
+  </div>
+
+  <!-- 7 Jan daytime bus -->
+  <div class="travel-row">
+    <div class="day-date"><span class="day-number" style="font-size:18px;">9 am</span><span class="day-month-dow">Jan · Wed</span></div>
+    <div class="day-content">
+      <div class="day-location">Bus: Hanoi → Ha Giang</div>
+      <div class="travel-detail">
+        <span class="travel-leg">Daytime bus (included in Mad Monkey package)</span>
+        <span class="travel-time">~7–8 hrs · arrive Ha Giang ~4–5pm</span>
+      </div>
+      <div class="day-desc" style="margin-top:8px;">Arrive Ha Giang late afternoon. Check in, meet your easy riders, settle in before the loop kicks off the next morning.</div>
+    </div>
+  </div>
+
+  <!-- 8-10 Ha Giang -->
+  <div class="day-row highlight-row" style="border-left-color: var(--vietnam);">
+    <div class="day-date">
+      <div class="day-range-label">8–10</div>
+      <span class="day-range-sub">Jan · Thu–Sat</span>
+    </div>
+    <div class="day-content">
+      <div class="day-location">Ha Giang Loop <span class="badge b-adventure">adventure</span></div>
+      <div class="day-desc">3-day motorbike loop (~350km) through the mountains of northern Vietnam. Quan Ba Heaven Gate, Ma Pi Leng Pass, Dong Van, Nho Que River. Homestays with local families each night. Book easy riders in advance if no one has a Vietnamese-recognised licence — police actively check on the loop. Mad Monkey — book opens October 2026.</div>
+    </div>
+  </div>
+
+  <!-- 11 Jan midnight bus back -->
+  <div class="travel-row">
+    <div class="day-date"><span class="day-number" style="font-size:18px;">11 mid</span><span class="day-month-dow">Jan · Sun</span></div>
+    <div class="day-content">
+      <div class="day-location">Overnight bus: Ha Giang → Hanoi</div>
+      <div class="travel-detail">
+        <span class="travel-leg">Sleeper bus (included in Mad Monkey package)</span>
+        <span class="travel-time">~7–8 hrs · arrive Hanoi ~7–8am Jan 12</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 Jan Hanoi → HCMC -->
+  <div class="travel-row">
+    <div class="day-date"><span class="day-number">12</span><span class="day-month-dow">Jan · Mon</span></div>
+    <div class="day-content">
+      <div class="day-location">Hanoi → Ho Chi Minh City</div>
+      <div class="travel-detail">
+        <span class="travel-leg">Collect bags from hostel storage</span>
+        <span class="travel-time">morning</span>
+      </div>
+      <div class="travel-detail">
+        <span class="travel-leg">HAN → SGN</span>
+        <span class="travel-time">~2 hrs · fly midday</span>
+      </div>
+      <div class="day-desc" style="margin-top:8px;">Arrive HCMC mid-afternoon. Check in, freshen up. Easy first night — pho, wander the backpacker district, scope out Bui Vien for tomorrow.</div>
+    </div>
+  </div>
+
+  <!-- 13 Jan HCMC -->
+  <div class="day-row">
+    <div class="day-date"><span class="day-number">13</span><span class="day-month-dow">Jan · Tue</span></div>
+    <div class="day-content">
+      <div class="day-location">Ho Chi Minh City <span class="badge b-market">markets</span> <span class="badge b-sights">sights</span></div>
+      <div class="day-desc">Ben Thanh Market in the morning — the iconic HCMC landmark, good for souvenirs and street food. Ben Thanh Street Food Market for lunch. War Remnants Museum if anyone's keen. Easy night — scope out Bui Vien, save the big one for tomorrow.</div>
+    </div>
+  </div>
+
+  <!-- 14 Jan HCMC day 2 -->
+  <div class="day-row">
+    <div class="day-date"><span class="day-number">14</span><span class="day-month-dow">Jan · Wed</span></div>
+    <div class="day-content">
+      <div class="day-location">Ho Chi Minh City <span class="badge b-sights">sights</span> <span class="badge b-party">nightlife</span></div>
+      <div class="day-desc">Cu Chi Tunnels day trip if you're keen — fascinating war history, about 1.5hrs from the city. Back for a rooftop bar afternoon. Bui Vien Street (Backpacker Street) at night — loud, cheap, neon-lit. The proper last night out. Late departure tomorrow so no rush.</div>
+    </div>
+  </div>
+
+  <!-- 15 Jan fly home -->
+  <div class="travel-row">
+    <div class="day-date"><span class="day-number">15</span><span class="day-month-dow">Jan · Thu</span></div>
+    <div class="day-content">
+      <div class="day-location">Ho Chi Minh City → Melbourne → Auckland</div>
+      <div class="travel-detail">
+        <span class="travel-leg">SGN → MEL (Jetstar JQ64)</span>
+        <span class="travel-time">Departs 10:40pm · 8h 20min</span>
+      </div>
+      <div class="travel-detail">
+        <span class="travel-leg">MEL → AKL (Jetstar JQ213)</span>
+        <span class="travel-time">Departs 6:55pm Sat 16 Jan · arrives AKL 12:30am Sun 17 Jan</span>
+      </div>
+      <div class="day-desc" style="margin-top:8px;">Late departure — full final day in HCMC. Legends.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-note">
+      <h4>Book immediately</h4>
+      <p>Koh Phangan NYE accommodation. Fills months out — 3–4 night minimum stay required for Full Moon Party.</p>
+    </div>
+    <div class="footer-note">
+      <h4>Ha Giang Loop</h4>
+      <p>Book easy riders in advance through QT Motorbikes or Mad Monkey. Need permit + guide. 3 days, ~350km.</p>
+    </div>
+    <div class="footer-note">
+      <h4>Domestic flights</h4>
+      <p>Krabi → Bangkok on AirAsia or Nok Air. Bangkok → Hanoi and Hanoi → HCMC on VietJet or AirAsia.</p>
+    </div>
+    <div class="footer-note">
+      <h4>Budget guide</h4>
+      <p>Thailand ~$60–90 NZD/day. Vietnam ~$40–60 NZD/day. Excludes international flights and Ha Giang tour cost.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
