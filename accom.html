@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boys Trip — Accommodation</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9A84C; --gold-light: #E8C96A; --cream: #F5F0E8;
+    --ink: #1A1814; --ink-mid: #3D3830; --ink-light: #7A6F60;
+    --thailand: #C9A84C; --vietnam: #B5392A;
+    --border: rgba(201,168,76,0.25);
+    --booked-bg: #F0F7F2; --booked-border: rgba(15,122,90,0.3); --booked-text: #0F7A5A;
+  }
+  body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; }
+  .page { max-width: 780px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+  /* NAV */
+  nav { background: #1A1814; padding: 0; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(201,168,76,0.2); }
+  .nav-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; }
+  .nav-brand { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.05em; color: #C9A84C; padding: 12px 0; }
+  .nav-links { display: flex; }
+  .nav-links a { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,240,232,0.7); text-decoration: none; padding: 16px 14px; display: block; }
+  .nav-links a:hover, .nav-links a.active { color: #C9A84C; }
+
+  /* HEADER */
+  .header { text-align: center; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+  .header-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.75rem; }
+  .header-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 8vw, 60px); line-height: 1; color: var(--ink); margin-bottom: 0.5rem; }
+  .header-sub { font-size: 13px; color: var(--ink-light); }
+
+  /* PROGRESS */
+  .progress-wrap { margin-bottom: 2.5rem; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-light); margin-bottom: 6px; }
+  .progress-track { height: 4px; background: rgba(0,0,0,0.08); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--gold); border-radius: 2px; transition: width 0.3s ease; }
+
+  /* COUNTRY DIVIDER */
+  .country-divider { display: flex; align-items: center; gap: 10px; margin: 2.5rem 0 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+  .country-flag { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.05em; padding: 3px 12px; border-radius: 3px; }
+  .flag-thailand { background: var(--thailand); color: #fff; }
+  .flag-vietnam { background: var(--vietnam); color: #fff; }
+  .country-nights { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+
+  /* STOP CARD */
+  .stop { margin-bottom: 1.75rem; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: #FDFAF5; }
+  .stop.is-booked { border-color: var(--booked-border); background: var(--booked-bg); }
+  .stop-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); gap: 12px; flex-wrap: wrap; }
+  .stop.is-booked .stop-header { border-bottom-color: var(--booked-border); }
+  .stop-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.03em; color: var(--ink); }
+  .stop.is-booked .stop-title { color: var(--booked-text); }
+  .stop-meta { font-size: 12px; color: var(--ink-light); }
+  .stop-status { display: flex; align-items: center; gap: 8px; }
+  .booked-badge { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; background: var(--booked-text); color: #fff; }
+  .pending-badge { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; background: rgba(201,168,76,0.15); color: #7A5A1A; border: 1px solid rgba(201,168,76,0.3); }
+
+  /* OPTIONS */
+  .options-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .option-card { border-radius: 3px; border: 1px solid var(--border); background: white; padding: 10px 14px; cursor: pointer; transition: border-color 0.15s; position: relative; }
+  .option-card:hover { border-color: var(--gold); }
+  .option-card.selected { border: 1.5px solid var(--gold); background: #FFFDF5; }
+  .option-card.is-booked-option { border: 1.5px solid var(--booked-text); background: var(--booked-bg); }
+  .option-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .option-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .option-price { font-size: 13px; font-weight: 500; color: var(--ink-light); white-space: nowrap; }
+  .option-card.selected .option-price { color: #7A5A1A; }
+  .option-card.is-booked-option .option-price { color: var(--booked-text); }
+  .option-detail { font-size: 12px; color: var(--ink-light); margin-top: 3px; line-height: 1.5; }
+  .option-tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .tag { font-size: 10px; padding: 1px 7px; border-radius: 2px; letter-spacing: 0.05em; }
+  .tag-party { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-beach { background: rgba(29,158,117,0.1); color: #0F7A5A; border: 1px solid rgba(29,158,117,0.25); }
+  .tag-pool { background: rgba(60,90,160,0.08); color: #2A4A9A; border: 1px solid rgba(60,90,160,0.2); }
+  .tag-included { background: var(--booked-bg); color: var(--booked-text); border: 1px solid var(--booked-border); }
+  .tag-hotel { background: rgba(130,80,180,0.08); color: #6A3A9A; border: 1px solid rgba(130,80,180,0.2); }
+  .option-link { display: inline-block; font-size: 11px; color: var(--gold); margin-top: 5px; text-decoration: none; letter-spacing: 0.03em; }
+  .option-link:hover { text-decoration: underline; }
+  .select-btn { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; border: 1px solid var(--gold); background: transparent; color: var(--gold); cursor: pointer; transition: all 0.15s; margin-top: 6px; }
+  .select-btn:hover { background: var(--gold); color: white; }
+  .select-btn.is-selected { background: var(--gold); color: white; }
+  .notes-area { width: 100%; margin-top: 10px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 3px; background: rgba(0,0,0,0.02); font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink); resize: vertical; min-height: 50px; outline: none; }
+  .notes-area:focus { border-color: var(--gold); }
+  .stop-footer { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .stop.is-booked .stop-footer { border-top-color: var(--booked-border); }
+  .mark-booked-btn { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; padding: 5px 14px; border-radius: 2px; border: 1px solid var(--booked-text); background: transparent; color: var(--booked-text); cursor: pointer; transition: all 0.15s; }
+  .mark-booked-btn:hover { background: var(--booked-text); color: white; }
+  .stop.is-booked .mark-booked-btn { background: var(--booked-text); color: white; }
+  .footer-note { font-size: 11px; color: var(--ink-light); }
+
+  @media (max-width: 500px) {
+    .page { padding: 2rem 1rem 4rem; }
+    .nav-brand { font-size: 14px; }
+    .nav-links a { padding: 16px 10px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">SEA Trip 2026</span>
+    <div class="nav-links">
+      <a href="index.html">Itinerary</a>
+      <a href="transport.html">Transport</a>
+      <a href="checklist.html">Checklist</a>
+      <a href="accom.html" class="active">Accom</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="header">
+    <p class="header-eyebrow">Thailand & Vietnam · Dec 27 – Jan 15</p>
+    <h1 class="header-title">Accommodation</h1>
+    <p class="header-sub">7 people · looking for 8-bed dorms where possible</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="progress-label">Loading...</span>
+      <span id="progress-pct"></span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- THAILAND -->
+  <div class="country-divider">
+    <span class="country-flag flag-thailand">Thailand</span>
+    <span class="country-nights">13 nights</span>
+  </div>
+
+  <!-- PHUKET -->
+  <div class="stop" id="stop-phuket">
+    <div class="stop-header">
+      <div>
+        <div class="stop-title">Phuket — Patong Beach</div>
+        <div class="stop-meta">27 Dec · 1 night · 7 people</div>
+      </div>
+      <div class="stop-status"><span class="pending-badge" id="badge-phuket">Deciding</span></div>
+    </div>
+    <div class="options-list">
+      <div class="option-card" id="opt-phuket-1">
+        <div class="option-top"><span class="option-name">Zostel Phuket</span><span class="option-price">~NZ$35–55pp</span></div>
+        <div class="option-detail">800m from Patong Beach · pool, rooftop bar, game room · well reviewed for cleanliness and staff</div>
+        <div class="option-tags"><span class="tag tag-party">Party</span><span class="tag tag-pool">Pool</span></div>
+        <a class="option-link" href="https://www.hostelworld.com/hostels/p/334929/zostel-phuket-patong-beach/" target="_blank">View on Hostelworld →</a><br>
+        <button class="select-btn" onclick="selectOption('phuket', 1)">Select</button>
+      </div>
+      <div class="option-card" id="opt-phuket-2">
+        <div class="option-top"><span class="option-name">Mad Monkey Phuket Patong</span><span class="option-price">~NZ$35–55pp</span></div>
+        <div class="option-detail">Rated 9.44/10 on Hostelworld · right on Patong · known for social/party atmosphere · pub crawls organised nightly</div>
+        <div class="option-tags"><span class="tag tag-party">Party</span><span class="tag tag-beach">Beach</span></div>
+        <a class="option-link" href="https://www.hostelworld.com/hostels/asia/thailand/phuket/d/patong-beach/" target="_blank">View on Hostelworld →</a><br>
+        <button class="select-btn" onclick="selectOption('phuket', 2)">Select</button>
+      </div>
+      <textarea class="notes-area" id="notes-phuket" placeholder="Notes..." onchange="saveNotes('phuket', this.value)"></textarea>
+    </div>
+    <div class="stop-footer">
+      <span class="footer-note">Book on Hostelworld</span>
+      <button class="mark-booked-btn" id="book-phuket" onclick="toggleBooked('phuket')">Mark as Booked</button>
+    </div>
+  </div>
+
+  <!-- KOH PHANGAN -->
+  <div class="stop is-booked" id="stop-phangan">
+    <div class="stop-header">
+      <div>
+        <div class="stop-title">Koh Phangan — Haad Rin</div>
+        <div class="stop-meta">28 Dec – 1 Jan · 4 nights · 7 people</div>
+      </div>
+      <div class="stop-status"><span class="booked-badge">✓ Booked</span></div>
+    </div>
+    <div class="options-list">
+      <div class="option-card is-booked-option">
+        <div class="option-top"><span class="option-name">6 Bed Community Villa — Haad Rin</span><span class="option-price">4,900 THB / 3 nights pp</span></div>
+        <div class="option-detail">NYE Full Moon Party location · 3-night minimum stay · booked and confirmed</div>
+        <div class="option-tags"><span class="tag tag-party">NYE ★</span><span class="tag tag-beach">Beach</span><span class="tag tag-included">Confirmed</span></div>
+      </div>
+    </div>
+    <div class="stop-footer">
+      <span class="footer-note">Already booked ✓</span>
+      <button class="mark-booked-btn is-booked" id="book-phangan" onclick="toggleBooked('phangan')">Booked ✓</button>
+    </div>
+  </div>
+
+  <!-- KRABI -->
+  <div class="stop" id="stop-krabi">
+    <div class="stop-header">
+      <div>
+        <div class="stop-title">Krabi — Ao Nang</div>
+        <div class="stop-meta">1–3 Jan · 2 nights · 7 people</div>
+      </div>
+      <div class="stop-status"><span class="pending-badge" id="badge-krabi">Deciding</span></div>
+    </div>
+    <div class="options-list">
+      <div class="option-card" id="opt-krabi-1">
+        <div class="option-top"><span class="option-name">Sea Beach Hostel & Club</span><span class="option-price">~NZ$25–40pp/night</span></div>
+        <div class="option-detail">Direct beachfront access · private beach area · saltwater pool · on-site bar and nightclub · pub crawls · 18–39 only</div>
+        <div class="option-tags"><span class="tag tag-party">Party</span><span class="tag tag-beach">Beachfront</span><span class="tag tag-pool">Pool</span></div>
+        <a class="option-link" href="https://www.hostelworld.com/hostels/p/323910/sea-beach-hostel-and-club-aonang-beachfront/" target="_blank">View on Hostelworld →</a><br>
+        <button class="select-btn" onclick="selectOption('krabi', 1)">Select</button>
+      </div>
+      <textarea class="notes-area" id="notes-krabi" placeholder="Notes..." onchange="saveNotes('krabi', this.value)"></textarea>
+    </div>
+    <div class="stop-footer">
+      <span class="footer-note">Book on Hostelworld</span>
+      <button class="mark-booked-btn" id="book-krabi" onclick="toggleBooked('krabi')">Mark as Booked</button>
+    </div>
+  </div>
+
+  <!-- PHI PHI -->
+  <div class="stop" id="stop-phiphi">
+    <div class="stop-header">
+      <div>
+        <div class="stop-title">Phi Phi Islands</div>
+        <div class="stop-meta">3–4 Jan · 1 night · 7 people</div>
+      </div>
+      <div class="stop-status"><span class="pending-badge" id="badge-phiphi">Deciding</span></div>
+    </div>
+    <div class="options-list">
+      <div class="option-card" id="opt-phiphi-1">
+        <div class="option-top"><span class="option-name">Ibiza House Phi Phi</span><span class="option-price">~NZ$40–60pp/night</span></div>
+        <div class="option-detail">8-bed ocean view dorms · beachfront on Loh Dalum Bay · pool party Tue/Thu/Sun 1–10pm free entry · loud music til 2am · 18–45 only · 1 night non-refundable deposit at peak season</div>
+        <div class="option-tags"><span class="tag tag-party">Party</span><span class="tag tag-beach">Beachfront</span><span class="tag tag-pool">Pool Party</span></div>
+        <a class="option-link" href="https://ibizaphiphi.com/room/ibiza-dorm/" target="_blank">Book direct at ibizaphiphi.com →</a><br>
+        <button class="select-btn" onclick="selectOption('phiphi', 1)">Select</button>
+      </div>
+      <textarea class="notes-area" id="notes-phiphi" placeholder="Notes..." onchange="saveNotes('phiphi', this.value)"></textarea>
+    </div>
+    <div class="stop-footer">
+      <span class="footer-note">Book direct at ibizaphiphi.com — peak season fills fast</span>
+      <button class="mark-booked-btn" id="book-phiphi" onclick="toggleBooked('phiphi')">Mark as Booked</button>
+    </div>
+  </div>
+
+  <!-- BANGKOK -->
+  <div class="stop" id="stop-bangkok">
+    <div class="stop-header">
+      <div>
+        <div class="stop-title">Bangkok — Khao San Road</div>
+        <div class="stop-meta">4–6 Jan · 2 nights · 7 people</div>
+      </div>
+      <div class="stop-status"><span class="pending-badge" id="badge-bangkok">Deciding</span></div>
+    </div>
+    <div class="options-list">
+      <div class="option-card" id="opt-bangkok-1">
+        <div class="option-top"><span class="option-name">Bed Station Khaosan</span><span class="option-price">~NZ$30–45pp/night</span></div>
+        <div class="option-detail">5 min walk to Khao San Road · saltwater pool · bar · pool table · gym · 8-bed dorm available · well reviewed for cleanliness and vibe</div>
+        <div class="option-tags"><span class="tag tag-party">Party</span><span class="tag tag-pool">Pool</span></div>
+        <a class="option-link" href="https://www.hostelworld.com/hostels/p/292188/bed-station-hostel-khaosan/" target="_blank">View on Hostelworld →</a><br>
+        <button class="select-btn" onclick="selectOption('bangkok', 1)">Select</button>
+      </div>
+      <textarea class="notes-area" id="notes-bangkok" placeholder="Notes..." onchange="saveNotes('bangkok', this.value)"></textarea>
+    </div>
+    <div class="stop-footer">
+      <span class="footer-note">Book on Hostelworld or bedstationhostel.com</span>
+      <button class="mark-booked-btn" id="book-bangkok" onclick="toggleBooked('bangkok')">Mark as Booked</button>
+    </div>
+  </div>
+
+  <!-- VIETNAM -->
+  <div class="country-divider" style="margin-top:2.5rem;">
+    <span class="country-flag flag-vietnam">Vietnam</span>
+    <span class="country-nights">8 nights</span>
+  </div>
+
+  <!-- HANOI -->
+  <div class="stop" id="stop-hanoi">
+    <div class="stop-header">
+      <div>
+        <div class="stop-title">Hanoi — Old Quarter</div>
+        <div class="stop-meta">6–7 Jan · 2 nights · 7 people (bags stored while on loop)</div>
+      </div>
+      <div class="stop-status"><span class="pending-badge" id="badge-hanoi">Deciding</span></div>
+    </div>
+    <div class="options-list">
+      <div class="option-card is-booked-option">
+        <div class="option-top"><span class="option-name">Mad Monkey Hanoi (1 night)</span><span class="option-price">See booking link</span></div>
+        <div class="option-detail">1 night before Ha Giang Loop · leave bags in storage while on the loop · then overnight bus to Ha Giang on 7 Jan at 9am</div>
+        <div class="option-tags"><span class="tag tag-party">Social</span><span class="tag tag-included">Via Loop Booking</span></div>
+        <a class="option-link" href="https://madmonkeyhostels.com/destination/hanoi?currency=USD&checkIn=2027-01-06&checkOut=2027-01-07&adult=1" target="_blank">Book at madmonkeyhostels.com →</a>
+      </div>
+      <div class="option-card" id="opt-hanoi-1">
+        <div class="option-top"><span class="option-name">Additional night — Hanoi hostel TBD</span><span class="option-price">~NZ$15–30pp/night</span></div>
+        <div class="option-detail">Need 1 more night on 6 Jan on arrival from Bangkok. Vietnam Cheers Hostel or Buffalo Hostel are popular in the Old Quarter.</div>
+        <div class="option-tags"><span class="tag tag-party">Social</span></div>
+        <a class="option-link" href="https://www.hostelworld.com/hostels/asia/vietnam/hanoi/" target="_blank">Search on Hostelworld →</a><br>
+        <button class="select-btn" onclick="selectOption('hanoi', 1)">Select</button>
+      </div>
+      <textarea class="notes-area" id="notes-hanoi" placeholder="Notes..." onchange="saveNotes('hanoi', this.value)"></textarea>
+    </div>
+    <div class="stop-footer">
+      <span class="footer-note">Mad Monkey bookable from ~Oct 2026</span>
+      <button class="mark-booked-btn" id="book-hanoi" onclick="toggleBooked('hanoi')">Mark as Booked</button>
+    </div>
+  </div>
+
+  <!-- HA GIANG -->
+  <div class="stop is-booked" id="stop-hagiang">
+    <div class="stop-header">
+      <div>
+        <div class="stop-title">Ha Giang Loop</div>
+        <div class="stop-meta">8–10 Jan · 3 nights · homestays included</div>
+      </div>
+      <div class="stop-status"><span class="booked-badge">✓ Included</span></div>
+    </div>
+    <div class="options-list">
+      <div class="option-card is-booked-option">
+        <div class="option-top"><span class="option-name">Mad Monkey Ha Giang — Homestays</span><span class="option-price">Included in tour ~NZ$330pp</span></div>
+        <div class="option-detail">3 nights with local families along the loop route · included in Mad Monkey package · book opens Oct 2026</div>
+        <div class="option-tags"><span class="tag tag-included">Included in Tour</span></div>
+        <a class="option-link" href="https://madmonkeyhostels.com" target="_blank">madmonkeyhostels.com →</a>
+      </div>
+    </div>
+    <div class="stop-footer">
+      <span class="footer-note">Book Mad Monkey Ha Giang in October 2026</span>
+      <button class="mark-booked-btn" id="book-hagiang" onclick="toggleBooked('hagiang')">Mark as Booked</button>
+    </div>
+  </div>
+
+  <!-- HO CHI MINH -->
+  <div class="stop" id="stop-hcmc">
+    <div class="stop-header">
+      <div>
+        <div class="stop-title">Ho Chi Minh City</div>
+        <div class="stop-meta">12–15 Jan · 3 nights · 7 people</div>
+      </div>
+      <div class="stop-status"><span class="pending-badge" id="badge-hcmc">Deciding</span></div>
+    </div>
+    <div class="options-list">
+      <div class="option-card" id="opt-hcmc-1">
+        <div class="option-top"><span class="option-name">California Saigon Hotel & Rooftop Pool</span><span class="option-price">From ~NZ$47pp/night</span></div>
+        <div class="option-detail">3-star hotel · rooftop pool · Jacuzzi · sauna · gym · free breakfast · 7 min walk to Bui Vien · near Ben Thanh Market · not a hostel so book multiple rooms for 7 people</div>
+        <div class="option-tags"><span class="tag tag-hotel">Hotel</span><span class="tag tag-pool">Rooftop Pool</span></div>
+        <a class="option-link" href="https://www.booking.com/hotel/vn/california-saigon-quan-1.en-gb.html" target="_blank">View on Booking.com →</a><br>
+        <button class="select-btn" onclick="selectOption('hcmc', 1)">Select</button>
+      </div>
+      <div class="option-card" id="opt-hcmc-2">
+        <div class="option-top"><span class="option-name">Hostel alternative — Bui Vien area</span><span class="option-price">~NZ$15–30pp/night</span></div>
+        <div class="option-detail">Various hostels on or near Bui Vien Street. Cheaper option if the group prefers a more backpacker vibe for the last few nights.</div>
+        <div class="option-tags"><span class="tag tag-party">Party</span></div>
+        <a class="option-link" href="https://www.hostelworld.com/hostels/asia/vietnam/ho-chi-minh-city/" target="_blank">Search on Hostelworld →</a><br>
+        <button class="select-btn" onclick="selectOption('hcmc', 2)">Select</button>
+      </div>
+      <textarea class="notes-area" id="notes-hcmc" placeholder="Notes..." onchange="saveNotes('hcmc', this.value)"></textarea>
+    </div>
+    <div class="stop-footer">
+      <span class="footer-note">Book on Booking.com or Hostelworld</span>
+      <button class="mark-booked-btn" id="book-hcmc" onclick="toggleBooked('hcmc')">Mark as Booked</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const STOPS = ['phuket','phangan','krabi','phiphi','bangkok','hanoi','hagiang','hcmc'];
+const state = JSON.parse(localStorage.getItem('accom-state') || '{}');
+
+function save() { localStorage.setItem('accom-state', JSON.stringify(state)); }
+
+function selectOption(stop, num) {
+  state[stop] = state[stop] || {};
+  state[stop].selected = num;
+  save();
+  renderStop(stop);
+}
+
+function toggleBooked(stop) {
+  state[stop] = state[stop] || {};
+  state[stop].booked = !state[stop].booked;
+  save();
+  renderStop(stop);
+  updateProgress();
+}
+
+function saveNotes(stop, val) {
+  state[stop] = state[stop] || {};
+  state[stop].notes = val;
+  save();
+}
+
+function renderStop(stop) {
+  const s = state[stop] || {};
+  const el = document.getElementById('stop-' + stop);
+  if (!el) return;
+
+  // Booked state
+  if (s.booked) {
+    el.classList.add('is-booked');
+    const btn = document.getElementById('book-' + stop);
+    if (btn) btn.textContent = 'Booked ✓';
+    const badge = document.getElementById('badge-' + stop);
+    if (badge) { badge.textContent = '✓ Booked'; badge.className = 'booked-badge'; }
+  } else {
+    // Don't remove is-booked from pre-booked ones (phangan, hagiang)
+    if (stop !== 'phangan' && stop !== 'hagiang') {
+      el.classList.remove('is-booked');
+      const btn = document.getElementById('book-' + stop);
+      if (btn) btn.textContent = 'Mark as Booked';
+      const badge = document.getElementById('badge-' + stop);
+      if (badge) { badge.textContent = 'Deciding'; badge.className = 'pending-badge'; }
+    }
+  }
+
+  // Selected option highlight
+  const optEls = el.querySelectorAll('.option-card:not(.is-booked-option)');
+  optEls.forEach((o, i) => {
+    o.classList.toggle('selected', s.selected === i + 1);
+    const btn = o.querySelector('.select-btn');
+    if (btn) btn.classList.toggle('is-selected', s.selected === i + 1);
+  });
+
+  // Notes
+  const notesEl = document.getElementById('notes-' + stop);
+  if (notesEl && s.notes) notesEl.value = s.notes;
+}
+
+function updateProgress() {
+  const total = STOPS.length;
+  // Count booked: pre-booked ones + user-marked
+  let booked = 0;
+  STOPS.forEach(s => {
+    if (s === 'phangan' || s === 'hagiang') booked++;
+    else if ((state[s] || {}).booked) booked++;
+  });
+  const pct = Math.round((booked / total) * 100);
+  document.getElementById('progress-label').textContent = `${booked} of ${total} stops booked`;
+  document.getElementById('progress-pct').textContent = `${pct}%`;
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+// Init
+STOPS.forEach(renderStop);
+updateProgress();
+</script>
+</body>
+</html>
