@@ -211,6 +211,15 @@
   @media (max-width: 500px) {
     .page { padding: 2rem 1rem 4rem; }
   }
+
+  html, body { overflow-x: hidden; max-width: 100%; }
+  .travel-detail { flex-wrap: wrap; }
+  .travel-leg { word-break: break-word; max-width: 100%; }
+  .route-strip { overflow-x: hidden; }
+  .day-row, .travel-row { max-width: 100%; overflow: hidden; }
+  .day-content { min-width: 0; overflow-wrap: break-word; word-break: break-word; }
+  .day-desc, .day-location { overflow-wrap: break-word; word-break: break-word; }
+
 </style>
 </head>
 <body><nav style="background:#1A1814; padding:0; position:sticky; top:0; z-index:100; border-bottom:1px solid rgba(201,168,76,0.2);">
