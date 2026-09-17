@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jake's Trip Info — SEA 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; max-width: 100%; }
+  :root {
+    --gold: #C9A84C; --gold-light: #E8C96A; --cream: #F5F0E8;
+    --ink: #1A1814; --ink-mid: #3D3830; --ink-light: #7A6F60;
+    --thailand: #C9A84C; --vietnam: #B5392A;
+    --travel-bg: #2A2520; --border: rgba(201,168,76,0.25);
+  }
+  body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; }
+  .page { max-width: 780px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+  nav { background: #1A1814; padding: 0; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(201,168,76,0.2); }
+  .nav-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 1rem; flex-wrap: wrap; }
+  .nav-brand { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.05em; color: #C9A84C; padding: 8px 0; white-space: nowrap; }
+  .nav-links { display: flex; flex-wrap: wrap; }
+  .nav-links a { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,240,232,0.7); text-decoration: none; padding: 8px 10px; display: block; white-space: nowrap; }
+  .nav-links a.active { color: #C9A84C; }
+
+  .header { text-align: center; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+  .header-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.75rem; }
+  .header-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(42px, 10vw, 72px); line-height: 0.95; color: var(--ink); margin-bottom: 1rem; }
+  .header-title span { color: var(--gold); }
+  .header-sub { font-size: 13px; color: var(--ink-light); }
+
+  /* URGENT BANNER */
+  .urgent { background: #991B1B; color: white; border-radius: 4px; padding: 14px 16px; margin-bottom: 2rem; font-size: 13px; line-height: 1.6; }
+  .urgent strong { font-weight: 500; display: block; margin-bottom: 4px; font-size: 14px; }
+
+  /* SECTION */
+  .section { margin-bottom: 2.5rem; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+  .section-flag { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.05em; padding: 3px 12px; border-radius: 3px; }
+  .flag-flight { background: #1A1814; color: #C9A84C; border: 1px solid rgba(201,168,76,0.3); }
+  .flag-thailand { background: var(--thailand); color: #fff; }
+  .flag-vietnam { background: var(--vietnam); color: #fff; }
+  .flag-cost { background: var(--ink); color: #fff; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.03em; color: var(--ink); }
+
+  /* ITEM ROWS */
+  .item { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; padding: 14px 0; border-bottom: 1px solid var(--border); align-items: start; }
+  .item:first-of-type { border-top: 1px solid var(--border); }
+  .item-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+  .item-detail { font-size: 12.5px; color: var(--ink-light); line-height: 1.5; overflow-wrap: break-word; word-break: break-word; }
+  .item-price { font-size: 15px; font-weight: 500; color: var(--ink); white-space: nowrap; text-align: right; }
+  .item-note { font-size: 11px; color: var(--ink-light); text-align: right; margin-top: 2px; }
+  .tag { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 2px; letter-spacing: 0.05em; margin-top: 4px; }
+  .tag-warn { background: rgba(153,27,27,0.08); color: #991B1B; border: 1px solid rgba(153,27,27,0.2); }
+  .tag-ok { background: rgba(15,122,90,0.08); color: #0F7A5A; border: 1px solid rgba(15,122,90,0.2); }
+  .tag-tbc { background: rgba(201,168,76,0.12); color: #7A5A1A; border: 1px solid rgba(201,168,76,0.3); }
+
+  /* ACCOM */
+  .accom-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .accom-item:first-of-type { border-top: 1px solid var(--border); }
+  .accom-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .accom-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .accom-price { font-size: 14px; font-weight: 500; color: var(--ink); white-space: nowrap; }
+  .accom-detail { font-size: 12.5px; color: var(--ink-light); margin-top: 3px; line-height: 1.5; overflow-wrap: break-word; }
+
+  /* COST SUMMARY */
+  .cost-box { background: #2A2520; border-radius: 4px; padding: 16px 18px; font-size: 13px; line-height: 2; color: rgba(245,240,232,0.7); }
+  .cost-grid { display: grid; grid-template-columns: 1fr auto; gap: 0 16px; }
+  .cost-total-row { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(201,168,76,0.3); display: grid; grid-template-columns: 1fr auto; gap: 0 16px; }
+  .cost-gold { color: var(--gold-light); text-align: right; }
+  .cost-label-big { font-size: 15px; font-weight: 500; color: rgba(245,240,232,0.95); }
+  .cost-total-big { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #C9A84C; text-align: right; }
+  .cost-sub { font-size: 11px; color: rgba(245,240,232,0.4); margin-top: 8px; }
+
+  .nyr-box { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3); border-radius: 4px; padding: 14px 16px; margin-top: 1rem; }
+  .nyr-title { font-size: 13px; font-weight: 500; color: var(--gold); margin-bottom: 6px; }
+  .nyr-detail { font-size: 12.5px; color: var(--ink-light); line-height: 1.6; }
+
+  @media (max-width: 500px) { .page { padding: 2rem 1rem 4rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">SEA Trip 2026</span>
+    <div class="nav-links">
+      <a href="index.html">Itinerary</a>
+      <a href="transport.html">Transport</a>
+      <a href="checklist.html">Checklist</a>
+      <a href="accom.html">Accom</a>
+      <a href="jake.html" class="active">Jake</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="header">
+    <p class="header-eyebrow">Southeast Asia · Dec 26 2026 → Jan 17 2027</p>
+    <h1 class="header-title">Jake's<br><span>Trip Info</span></h1>
+    <p class="header-sub">Everything you need to book · prices current as of Sep 2026</p>
+  </div>
+
+  <div class="urgent">
+    <strong>⚡ Book fast</strong>
+    ET608 Bangkok → Hanoi only has 7 seats remaining at NZ$147.56. Book FlightNetwork today.
+  </div>
+
+  <!-- FLIGHTS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag flag-flight">✈</span>
+      <span class="section-title">Flights to Book</span>
+    </div>
+
+    <div class="item">
+      <div>
+        <div class="item-title">Auckland → Phuket</div>
+        <div class="item-detail">Air NZ · A380-800 + 737 · 26 Dec · departs 15:15 · transit Singapore 10h 10m · arrives 07:50 Sun 27 Dec</div>
+        <span class="tag tag-ok">Book on airnz.co.nz</span>
+      </div>
+      <div>
+        <div class="item-price">NZ$2,257</div>
+        <div class="item-note">Economy · one way</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div>
+        <div class="item-title">Phuket → Bangkok · TG212</div>
+        <div class="item-detail">Thai Airways · 4 Jan · departs 16:05 → arrives 17:35 · 1h 30m direct · incl. checked luggage</div>
+        <span class="tag tag-ok">Book on FlightNetwork</span>
+      </div>
+      <div>
+        <div class="item-price">NZ$372.32</div>
+        <div class="item-note">per adult</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div>
+        <div class="item-title">Bangkok → Hanoi · ET608</div>
+        <div class="item-detail">Ethiopian Airlines · 6 Jan · departs 13:30 → arrives 15:30 · 2h direct · incl. checked luggage</div>
+        <span class="tag tag-warn">⚡ Only 7 seats — book now</span>
+      </div>
+      <div>
+        <div class="item-price">NZ$147.56</div>
+        <div class="item-note">per adult</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div>
+        <div class="item-title">Hanoi → Ho Chi Minh City · VJ157</div>
+        <div class="item-detail">VietJet · 12 Jan · departs 13:20 → arrives 15:30 · 2h 10m direct · no checked luggage included — add separately</div>
+        <span class="tag tag-warn">Add checked bag at booking</span>
+      </div>
+      <div>
+        <div class="item-price">NZ$127.77</div>
+        <div class="item-note">per adult</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div>
+        <div class="item-title">Ho Chi Minh → Auckland</div>
+        <div class="item-detail">Jetstar · 15 Jan · departs 22:40 SGN → 1 stop MEL → arrives 18:25+1 AKL · same flight as the group</div>
+        <span class="tag tag-ok">Book on Jetstar.com</span>
+      </div>
+      <div>
+        <div class="item-price">NZ$1,613</div>
+        <div class="item-note">incl. ~$125 fees</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FERRIES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag flag-thailand">⛵</span>
+      <span class="section-title">Ferries — Book on 12go.asia</span>
+    </div>
+
+    <div class="item">
+      <div>
+        <div class="item-title">Phuket → Koh Phangan</div>
+        <div class="item-detail">Lomprayah Express · 28 Dec · departs 09:30 Phuket Lomprayah → arrives ~16:30 Thong Sala · leave Mad Monkey by 8:00am</div>
+      </div>
+      <div><div class="item-price">NZ$76.64</div></div>
+    </div>
+
+    <div class="item">
+      <div>
+        <div class="item-title">Koh Phangan → Krabi</div>
+        <div class="item-detail">Van2Travel · 1 Jan · departs 11:30 Thong Sala → arrives ~16:30 Ao Nang · leave The Sea Resort by 10:00am (no Grabs on island)</div>
+      </div>
+      <div><div class="item-price">NZ$39.02</div></div>
+    </div>
+
+    <div class="item">
+      <div>
+        <div class="item-title">Krabi → Phi Phi Islands</div>
+        <div class="item-detail">Bundhaya Speedboat · 3 Jan · departs 10:10 Nopparat Thara Pier → arrives 11:00 Ton Sai Pier · leave Base by 9:00am</div>
+      </div>
+      <div><div class="item-price">NZ$49.81</div></div>
+    </div>
+
+    <div class="item">
+      <div>
+        <div class="item-title">Phi Phi → Phuket</div>
+        <div class="item-detail">Chaokoh Speedboat · 4 Jan · departs 11:30 Ton Sai Pier → arrives 12:30 Rassada Pier · leave Slumber Party by 10:15am (12 min walk)</div>
+      </div>
+      <div><div class="item-price">NZ$46.91</div></div>
+    </div>
+  </div>
+
+  <!-- ACCOM THAILAND -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag flag-thailand">Thailand</span>
+      <span class="section-title">Accommodation</span>
+    </div>
+
+    <div class="accom-item">
+      <div class="accom-top">
+        <div class="accom-name">Mad Monkey Phuket · 27 Dec · 1 night</div>
+        <div class="accom-price">NZ$162</div>
+      </div>
+      <div class="accom-detail">Twin room solo · doubled from group rate · Patong Beach · use code LOUIE10</div>
+    </div>
+
+    <div class="accom-item">
+      <div class="accom-top">
+        <div class="accom-name">Koh Phangan NYE · 28 Dec–1 Jan · 4 nights</div>
+        <div class="accom-price">TBC</div>
+      </div>
+      <div class="accom-detail">Two options below — decide soon, NYE books out fast.</div>
+      <div class="nyr-box" style="margin-top:8px;">
+        <div class="nyr-title">Option A — Stay with the group at The Sea Resort Haad Rin</div>
+        <div class="nyr-detail">NZ$1,500 · join existing booking · same location as everyone on NYE</div>
+      </div>
+      <div class="nyr-box" style="margin-top:8px;">
+        <div class="nyr-title">Option B — Separate dorm bed nearby</div>
+        <div class="nyr-detail">NZ$500–600 · independent booking · still on Haad Rin but sleeping separately from the group</div>
+      </div>
+    </div>
+
+    <div class="accom-item">
+      <div class="accom-top">
+        <div class="accom-name">Base Hostel Ao Nang · 1–3 Jan · 2 nights</div>
+        <div class="accom-price">NZ$170</div>
+      </div>
+      <div class="accom-detail">Twin room solo · doubled from group rate · 8-bed dorm · pay on arrival</div>
+    </div>
+
+    <div class="accom-item">
+      <div class="accom-top">
+        <div class="accom-name">Slumber Party Phi Phi · 3–4 Jan · 1 night</div>
+        <div class="accom-price">NZ$65</div>
+      </div>
+      <div class="accom-detail">Twin room solo · doubled from group rate · Loh Dalum Bay</div>
+    </div>
+
+    <div class="accom-item">
+      <div class="accom-top">
+        <div class="accom-name">Mad Monkey Bangkok · 4–6 Jan · 2 nights</div>
+        <div class="accom-price">NZ$236</div>
+      </div>
+      <div class="accom-detail">Twin room solo · doubled from group rate · Khao San Road area · use code LOUIE10</div>
+    </div>
+  </div>
+
+  <!-- ACCOM VIETNAM -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag flag-vietnam">Vietnam</span>
+      <span class="section-title">Accommodation</span>
+    </div>
+
+    <div class="accom-item">
+      <div class="accom-top">
+        <div class="accom-name">Mad Monkey Hanoi · 6–7 Jan · 1 night</div>
+        <div class="accom-price">NZ$18</div>
+      </div>
+      <div class="accom-detail">Sharing with Luke · same rate as group · use code LOUIE10</div>
+    </div>
+
+    <div class="accom-item">
+      <div class="accom-top">
+        <div class="accom-name">Ha Giang Loop · 7–12 Jan · 5 nights</div>
+        <div class="accom-price">NZ$465</div>
+      </div>
+      <div class="accom-detail">Mad Monkey Ha Giang · homestays + sleeper buses included · book opens Oct 2026 · madmonkeyhostels.com</div>
+    </div>
+
+    <div class="accom-item">
+      <div class="accom-top">
+        <div class="accom-name">California Saigon Hotel · 12–15 Jan · 3 nights</div>
+        <div class="accom-price">NZ$174</div>
+      </div>
+      <div class="accom-detail">Sharing with Luke · same rate as group · rooftop pool · near Bui Vien</div>
+    </div>
+  </div>
+
+  <!-- COST SUMMARY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag flag-cost">NZD</span>
+      <span class="section-title">Total Cost Summary</span>
+    </div>
+
+    <div class="cost-box">
+      <div class="cost-grid">
+        <span>✈ AKL → Phuket (Air NZ)</span><span class="cost-gold">$2,257</span>
+        <span>✈ Phuket → Bangkok (TG212)</span><span class="cost-gold">$372</span>
+        <span>✈ Bangkok → Hanoi (ET608)</span><span class="cost-gold">$148</span>
+        <span>✈ Hanoi → HCMC (VJ157)</span><span class="cost-gold">$128</span>
+        <span>✈ HCMC → Auckland (Jetstar)</span><span class="cost-gold">$1,613</span>
+        <span style="padding-left:8px; color:rgba(245,240,232,0.4);">Flights subtotal</span><span class="cost-gold" style="color:rgba(201,168,76,0.6);">$4,518</span>
+      </div>
+      <div class="cost-grid" style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(201,168,76,0.15);">
+        <span>⛵ Ferries (all 4)</span><span class="cost-gold">$212</span>
+        <span>🏨 Phuket — Mad Monkey</span><span class="cost-gold">$162</span>
+        <span>🏨 Koh Phangan NYE</span><span class="cost-gold">$500–1,500</span>
+        <span>🏨 Krabi — Base</span><span class="cost-gold">$170</span>
+        <span>🏨 Phi Phi — Slumber Party</span><span class="cost-gold">$65</span>
+        <span>🏨 Bangkok — Mad Monkey</span><span class="cost-gold">$236</span>
+        <span>🏨 Hanoi — Mad Monkey</span><span class="cost-gold">$18</span>
+        <span>🏨 Ha Giang Loop</span><span class="cost-gold">$465</span>
+        <span>🏨 HCMC — California Saigon</span><span class="cost-gold">$174</span>
+        <span style="padding-left:8px; color:rgba(245,240,232,0.4);">Transport + Accom subtotal</span><span class="cost-gold" style="color:rgba(201,168,76,0.6);">$1,502–2,502</span>
+      </div>
+      <div class="cost-total-row">
+        <span class="cost-label-big">Total estimate (excl. food &amp; activities)</span>
+        <span class="cost-total-big">~$6,020–7,020</span>
+      </div>
+      <p class="cost-sub">NYE accom is the biggest variable — Option A ($1,500) vs Option B ($500–600) makes a ~$1,000 difference to the total.</p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
